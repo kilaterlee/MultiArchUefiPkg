@@ -1477,7 +1477,8 @@ CpuRunFunc (
 
   Context = CpuAllocContext (Cpu);
   if (Context == NULL) {
-    DEBUG ((DEBUG_ERROR, "Could not allocate CpuRunContext\n"));
+    DEBUG ((DEBUG_ERROR, "Could not allocate CpuRunContext in CpuRunFunc\n"));
+    gRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
     return EFI_OUT_OF_RESOURCES;
   }
 
@@ -1588,11 +1589,12 @@ CpuRunImage (
   ASSERT (Record->Cpu != NULL);
 
   Context = CpuAllocContext (Record->Cpu);
-  DEBUG ((DEBUG_ERROR, "Ctx %p vs %p\n", Context->Cpu, Record->Cpu));
   if (Context == NULL) {
-    DEBUG ((DEBUG_ERROR, "Could not allocate CpuRunContext\n"));
+    DEBUG ((DEBUG_ERROR, "Could not allocate CpuRunContext in CpuRunImage\n"));
+    gRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
     return EFI_OUT_OF_RESOURCES;
   }
+  DEBUG ((DEBUG_ERROR, "Ctx %p vs %p\n", Context->Cpu, Record->Cpu));
 
   Record->ImageHandle = ImageHandle;
 

@@ -21,6 +21,7 @@
 #include <Library/PeCoffLib.h>
 #include <Library/UefiBootServicesTableLib.h>
 #include <Library/UefiDriverEntryPoint.h>
+#include <Library/UefiRuntimeServicesTableLib.h>
 
 #include <Protocol/Cpu.h>
 #include <Protocol/CpuIo2.h>
