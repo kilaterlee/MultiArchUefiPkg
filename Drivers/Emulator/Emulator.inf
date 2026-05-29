@@ -80,6 +80,9 @@
   gEfiCpuIo2ProtocolGuid                  ## CONSUMES
   gEdkiiPeCoffImageEmulatorProtocolGuid   ## PRODUCES
 
+[Pcd]
+  gEfiMdePkgTokenSpaceGuid.PcdMaximumLinkedListLength
+
 [Depex]
   gEfiCpuArchProtocolGuid AND gEfiCpuIo2ProtocolGuid
 

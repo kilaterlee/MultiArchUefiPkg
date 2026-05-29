@@ -164,6 +164,7 @@ EfiWrapperCreateEventCommon (
    * the event could be signalled (and closed from notification fn).
    */
   CriticalBegin ();
+  CheckIsListValid (&mEventList);
   InsertTailList (&mEventList, &Record->Link);
   CriticalEnd ();
 

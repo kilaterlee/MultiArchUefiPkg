@@ -141,6 +141,7 @@ ImageProtocolRegister (
 
   CpuRegisterCodeRange (Record->Cpu, ImageBase, ImageSize);
 
+  CheckIsListValid (&mImageList);
   InsertTailList (&mImageList, &Record->Link);
 
   /*

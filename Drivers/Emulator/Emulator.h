@@ -482,3 +482,8 @@ IsDriverImagePointer (
          ((UINTN)Pointer <= ((UINTN)gDriverImage->ImageBase +
                              gDriverImage->ImageSize - 1));
 }
+
+BOOLEAN
+CheckIsListValid (
+  IN CONST LIST_ENTRY  *List
+  );

@@ -13,6 +13,45 @@
 #include "Emulator.h"
 
 BOOLEAN
+CheckIsListValid (
+  IN CONST LIST_ENTRY  *List
+  )
+{
+  UINTN             Count;
+  CONST LIST_ENTRY  *Ptr;
+
+  //
+  // Test the validity of List and Node
+  //
+  ASSERT (List != NULL);
+  ASSERT (List->ForwardLink != NULL);
+  ASSERT (List->BackLink != NULL);
+
+  if (PcdGet32 (PcdMaximumLinkedListLength) > 0) {
+    Count = 0;
+    Ptr   = List;
+
+    //
+    // Count the total number of nodes in List.
+    // Exit early if the number of nodes in List >= PcdMaximumLinkedListLength
+    //
+    do {
+      Ptr = Ptr->ForwardLink;
+      Count++;
+    } while ((Ptr != List) && (Count < PcdGet32 (PcdMaximumLinkedListLength)));
+
+    //
+    // Reset if linked list is too long to workaround for loongson platform.
+    //
+    if (Count >= PcdGet32 (PcdMaximumLinkedListLength)) {
+      gRT->ResetSystem (EfiResetCold, EFI_SUCCESS, 0, NULL);
+    }
+  }
+
+  return TRUE;
+}
+
+BOOLEAN
 EmulatorIsNativeCall (
   IN  UINT64  ProgramCounter
   )

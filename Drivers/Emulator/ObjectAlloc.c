@@ -69,6 +69,7 @@ ObjectAllocCreate (
       }
     }
 
+    CheckIsListValid (&ObjectContext->List);
     InsertTailList (&ObjectContext->List, &Object->Link);
   }
 
@@ -116,6 +117,7 @@ ObjectAllocDestroy (
      * IsListEmpty is true only for allocated objects. No objects
      * ought to be allocated at this time.
      */
+    CheckIsListValid (&Object->Link);
     ASSERT (!IsListEmpty (&Object->Link));
     Config->OnDestroy (Object, Config->CbContext);
   }
@@ -139,6 +141,7 @@ ObjectAlloc (
   ASSERT (Context->Arena != NULL);
 
   Config = &Context->Config;
+  CheckIsListValid (&Context->List);
   if (IsListEmpty (&Context->List)) {
     return EFI_OUT_OF_RESOURCES;
   }
@@ -177,6 +180,7 @@ ObjectFree (
 
   Config = &Context->Config;
 
+  CheckIsListValid (&Object->Link);
   ASSERT (IsListEmpty (&Object->Link));
   if (Config->OnFree != NULL) {
     Config->OnFree (Object, Config->CbContext);
